@@ -43,7 +43,7 @@ jobs:
 
       - name: Dokcer build and push
         run: |
-          docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/lighthouse .
+          docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/lighthouse . --no-cache
           docker push ${{ secrets.DOCKER_USERNAME }}/lighthouse:latest
 
       - name: EC2 Docker Run
@@ -54,6 +54,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             cd pj
-            sudo docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} down --remove-orphans
-            sudo docker-compose -f ${{ secrets.DOCKER_COMPOSE_DB_YML }} up -d
-            sudo docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} up -d
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} down --remove-orphans
+            docker rmi ${{ secrets.DOCKER_COMPOSE_DB_YML }}/mysqlamd
+            docker rmi ${{ secrets.DOCKER_COMPOSE_YML }}/lighthouse            
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_DB_YML }} up -d
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} up -d
