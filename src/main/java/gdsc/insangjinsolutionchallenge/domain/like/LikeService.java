@@ -1,7 +1,6 @@
 package gdsc.insangjinsolutionchallenge.domain.like;
 
 import gdsc.insangjinsolutionchallenge.domain.post.Post;
-import gdsc.insangjinsolutionchallenge.domain.post.PostRepository;
 import gdsc.insangjinsolutionchallenge.domain.post.PostService;
 import gdsc.insangjinsolutionchallenge.domain.user.User;
 import gdsc.insangjinsolutionchallenge.domain.user.UserRepository;
@@ -14,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class LikeService {
 
     private final LikeRepository likeRepository;
-    private final PostRepository postRepository;
     private final PostService postService;
     private final UserRepository userRepository;
 
-    @Transactional
-    public void addLike(Long userId, Long postId){
+   @Transactional
+//   @Cacheable(value = "likeCount", key = "#p1", cacheManager = "redisCacheManager")
+   public int addLike(Long userId, Long postId){
         User userInfo = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("올바른 유저 정보를 입력해 주세요."));
         Post post = postService.findPostDao(postId);
@@ -30,12 +29,11 @@ public class LikeService {
                     .post(post)
                     .build();
             likeRepository.save(like);
+            return likeRepository.countLikesByPostId(postId);
         } else {
             post.addLikeCount(post.getLikeCount()-1);
             likeRepository.deleteByUserAndPost(userInfo,post);
+            return likeRepository.countLikesByPostId(postId);
         }
     }
-
-
-
 }

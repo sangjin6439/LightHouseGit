@@ -9,7 +9,11 @@ import org.springframework.stereotype.Repository;
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
     // 있는지 없는지 검토
+//    @Cacheable(value = "likeExists", key = "{#user.id, #post.id}")
     boolean existsByUserAndPost(User user, Post post);
 
     void deleteByUserAndPost(User user, Post post);
+
+//    @Cacheable(value = "likeCounts", key = "#postId")
+    int countLikesByPostId(Long postId);
 }

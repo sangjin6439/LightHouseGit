@@ -6,6 +6,14 @@ spring:
           google:
             scope: profile, email # 기본값이 openid, profile, email이지만 openid를 등록하게 되면 서비스마다(카카오, 네이버) OAuth2Service를 만들어야하기 때문에 profile, email만 scope로 지정
 
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cache:
+    type: redis
+
   datasource:
     url: ${DB_JDBC_URL}
     username: ${DB_USER}
@@ -25,7 +33,6 @@ spring:
         type:
           descriptor:
             sql: trace
-
 
 
 logging.level:
