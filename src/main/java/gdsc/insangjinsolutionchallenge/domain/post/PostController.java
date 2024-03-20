@@ -35,8 +35,8 @@ public class PostController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponsePostDto find(@PathVariable("id") Long id) {
-        return postService.find(id);
+    public ResponsePostDto find(Principal principal, @PathVariable("id") Long id) {
+        return postService.find(Long.valueOf(principal.getName()),id);
     }
 
     @PatchMapping("/update/{id}")

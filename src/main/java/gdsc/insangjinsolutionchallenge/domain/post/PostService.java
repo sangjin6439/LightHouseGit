@@ -2,6 +2,7 @@ package gdsc.insangjinsolutionchallenge.domain.post;
 
 import gdsc.insangjinsolutionchallenge.domain.comment.CommentService;
 import gdsc.insangjinsolutionchallenge.domain.comment.ResponseCommentDto;
+import gdsc.insangjinsolutionchallenge.domain.like.LikeRepository;
 import gdsc.insangjinsolutionchallenge.domain.user.User;
 import gdsc.insangjinsolutionchallenge.domain.user.UserRepository;
 import gdsc.insangjinsolutionchallenge.global.exception.ApplicationErrorException;
@@ -19,6 +20,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentService commentService;
     private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
 
     @Transactional
     public String save(Long userId, RequestPostDto requestPostDto){
@@ -78,7 +80,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public ResponsePostDto find(Long id){
+    public ResponsePostDto find(Long userId, Long id){
         Post post = findPostDao(id);
         List<ResponseCommentDto> commentDtos = commentService.findAll(id);
 
@@ -89,6 +91,7 @@ public class PostService {
                 .userName(post.getUser().getName())
                 .userLevel(post.getUser().getLevel())
                 .comments(commentDtos)
+                .verifyLike(verifyUserLike(userId, id))
                 .createAt(post.getCreateAt())
                 .updateAt(post.getUpdateAt())
                 .likeCount(post.getLikeCount())
@@ -124,4 +127,11 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("다시 확인하세요."));
     }
 
+    public boolean verifyUserLike(Long userId,Long postId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("잘못된 유저 정보입니다."));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("없는 게시물입니다"));
+
+        return likeRepository.existsByUserAndPost(user, post);
+    }
 }
+

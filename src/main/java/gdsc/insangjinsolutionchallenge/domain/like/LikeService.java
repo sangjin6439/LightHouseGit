@@ -18,7 +18,6 @@ public class LikeService {
 
 
    @Transactional
-//   @Cacheable(value = "likeCount", key = "#p1", cacheManager = "redisCacheManager")
    public int addLike(Long userId, Long postId){
         User userInfo = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("올바른 유저 정보를 입력해 주세요."));

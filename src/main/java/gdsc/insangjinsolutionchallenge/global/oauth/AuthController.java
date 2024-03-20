@@ -26,8 +26,9 @@ public class AuthController {
         return authService.signup(loginUserDto);
     }
 
+    //로그인 할때에는 @valid빼기 -> 로그인시에는 이름, 나이를 넣지 않아서 검증에 걸림
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody @Valid LoginUserDto loginUserDto) {
+    public ResponseEntity<TokenDto> login(@RequestBody LoginUserDto loginUserDto) {
         return ResponseEntity.ok(authService.login(loginUserDto));
     }
 

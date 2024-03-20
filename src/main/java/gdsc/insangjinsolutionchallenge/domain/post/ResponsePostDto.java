@@ -20,6 +20,8 @@ public class ResponsePostDto {
     private String content;
     private Integer likeCount;
     private List<ResponseCommentDto> comments;
+    //유저가 해당 게시물에 좋아요를 하면 true 아니면 false반환 -> 프론트에서 하트에 불 들어오는거 구현용
+    private boolean verifyLike;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
