@@ -82,10 +82,10 @@ public class TokenProvider {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
 
-//        String email = claims.get("email").toString();
+//        String email = claims.get("email").toString(); -> 오류뜸 nullPointException
         // UserDetails 객체를 만들어서 Authentication 리턴
         UserDetails principal = new User(claims.getSubject(), "", authorities);
-
+        log.info(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

@@ -1,5 +1,6 @@
 package gdsc.insangjinsolutionchallenge.global.oauth;
 
+import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,10 +13,10 @@ import org.springframework.data.redis.core.RedisHash;
 public class RefreshToken {
 
     @Id
-//    @Column(name = "rt_key")
+    @Column(name = "rt_key")
     private String key;
 
-//    @Column(name = "rt_value")
+    @Column(name = "rt_value")
     private String value;
 
     @Builder

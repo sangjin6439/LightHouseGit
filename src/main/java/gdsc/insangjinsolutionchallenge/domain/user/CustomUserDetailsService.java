@@ -2,6 +2,7 @@ package gdsc.insangjinsolutionchallenge.domain.user;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -19,7 +21,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     @Transactional
-//    @Cacheable(cacheNames = "loginMember", key = "#p0", condition = "#p0 != null", cacheManager = "redisCacheManager")
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return memberRepository.findByEmail(username)
                 .map(this::createUserDetails)
