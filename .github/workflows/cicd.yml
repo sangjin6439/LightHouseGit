@@ -1,0 +1,59 @@
+name: CI/CD
+
+on:
+  push:
+    branches: main
+
+permissions: write-all
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Set up JDK17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --info -x test
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Docker Login
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Dokcer build and push
+        run: |
+          docker build --platform linux/amd64 -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/lighthouse . --no-cache
+          docker push ${{ secrets.DOCKER_USERNAME }}/lighthouse:latest
+
+      - name: EC2 Docker Run
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd pj
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} down --remove-orphans
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/mysqlamd
+            docker rmi ${{ secrets.DOCKER_USERNAME }}/lighthouse            
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_DB_YML }} up -d
+            docker-compose -f ${{ secrets.DOCKER_COMPOSE_YML }} up -d
