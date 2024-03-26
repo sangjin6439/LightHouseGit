@@ -55,6 +55,7 @@ public class PostService {
                         .userName(post.getUser().getName())
                         .userLevel(post.getUser().getLevel())
                         .createAt(post.getCreateAt())
+                        .verifyLike(post.getVerifyLike())
                         .build())
                 .toList();
 
