@@ -7,14 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @RestController
-public class EverlearningController {
+public class EverLearningController {
 
     private final WebClient webClient;
 
-
     @Autowired
-    public EverlearningController(WebClient.Builder webClientBuilder) {
+    public EverLearningController(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://apis.data.go.kr/7010000").build();
     }
 
@@ -45,7 +46,8 @@ public class EverlearningController {
         return webClient.get()
                 .uri(url) //API 엔드 포인트, 요청 URL설정
                 .retrieve() //요청 보내기 메서드
-                .bodyToMono(String.class); // 응답 데이터를 Mono<T>로 변환
+                .bodyToMono(String.class)// 응답 데이터를 Mono<T>로 변환
+                .timeout(Duration.ofSeconds(5));  //5초 이내로 응답이 안오면 timeout 발생 시킴
     }
 
 }
