@@ -38,7 +38,7 @@ public class PostService {
 
     // all이면 전체 , 아니면 likeCount로 검색
     @Transactional(readOnly = true)
-    public List<ResponsePostListDto> findAll(String sort) {
+    public List<ResponsePostListDto> findAll(Long userId,String sort) {
         List<Post> posts;
         if (sort.equals("all")) {
             posts = postRepository.findAll();
@@ -55,7 +55,7 @@ public class PostService {
                         .userName(post.getUser().getName())
                         .userLevel(post.getUser().getLevel())
                         .createAt(post.getCreateAt())
-                        .verifyLike(post.getVerifyLike())
+                        .verifyLike(verifyUserLike(userId,post.getId()))
                         .build())
                 .toList();
 

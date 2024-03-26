@@ -23,8 +23,8 @@ public class PostController {
     }
 
     @GetMapping("/find/list/{sort}")
-    public List<ResponsePostListDto> findAll(@PathVariable("sort") String sort) {
-        return postService.findAll(sort);
+    public List<ResponsePostListDto> findAll(Principal principal,@PathVariable("sort") String sort) {
+        return postService.findAll(Long.valueOf(principal.getName()),sort);
     }
 
     // 검색어로 검색하는 기능
