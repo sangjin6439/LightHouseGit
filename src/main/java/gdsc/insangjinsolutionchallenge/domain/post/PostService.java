@@ -23,9 +23,9 @@ public class PostService {
     private final LikeRepository likeRepository;
 
     @Transactional
-    public String save(Long userId, RequestPostDto requestPostDto){
+    public String save(Long userId, RequestPostDto requestPostDto) {
         User userInfo = userRepository.findById(userId)
-                .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("없는 유저입니다."));
 
         Post post = Post.builder()
                 .title(requestPostDto.getTitle())
@@ -35,13 +35,14 @@ public class PostService {
         postRepository.save(post);
         return "저장 완료!";
     }
+
     // all이면 전체 , 아니면 likeCount로 검색
     @Transactional(readOnly = true)
-    public List<ResponsePostListDto> findAll(String sort){
+    public List<ResponsePostListDto> findAll(String sort) {
         List<Post> posts;
-        if(sort.equals("all")){
+        if (sort.equals("all")) {
             posts = postRepository.findAll();
-        }else {
+        } else {
             posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, "likeCount"));
         }
 
@@ -63,7 +64,7 @@ public class PostService {
 
     // 검색어로 검색
     @Transactional(readOnly = true)
-    public List<ResponsePostListDto> findSearchTerm(String searchTerm){
+    public List<ResponsePostListDto> findSearchTerm(String searchTerm) {
         List<Post> posts = postRepository.findByTitleContaining(searchTerm);
         List<ResponsePostListDto> responsePostDtos = posts.stream()
                 .map(post -> ResponsePostListDto.builder()
@@ -80,7 +81,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public ResponsePostDto find(Long userId, Long id){
+    public ResponsePostDto find(Long userId, Long id) {
         Post post = findPostDao(id);
         List<ResponseCommentDto> commentDtos = commentService.findAll(id);
 
@@ -101,11 +102,11 @@ public class PostService {
 
 
     @Transactional
-    public String update(Long userId, Long id, RequestPostDto requestPostDto){
+    public String update(Long userId, Long id, RequestPostDto requestPostDto) {
         String userEmail = findPostDao(id).getUser().getEmail();
-        String myEmail = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("없는 사용자입니다")).getEmail();
-        if(!userEmail.equals(myEmail)){
-            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED,"권한이 없는 사용자입니다.");
+        String myEmail = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("없는 사용자입니다")).getEmail();
+        if (!userEmail.equals(myEmail)) {
+            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED, "권한이 없는 사용자입니다.");
         }
         Post post = findPostDao(id);
         post.update(requestPostDto);
@@ -113,25 +114,28 @@ public class PostService {
     }
 
     @Transactional
-    public String delete(Long userId, Long id){
+    public String delete(Long userId, Long id) {
         Long authorId = Long.valueOf(String.valueOf(findPostDao(id).getUser().getId()));
-        if(!authorId.equals(userId)){
-            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED,"권한이 없는 사용자입니다.");
+        if (!authorId.equals(userId)) {
+            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED, "권한이 없는 사용자입니다.");
         }
         postRepository.delete(findPostDao(id));
         return "삭제 완료";
     }
 
 
-    public Post findPostDao(Long id){
-        return postRepository.findById(id).orElseThrow(()->new IllegalArgumentException("다시 확인하세요."));
+    public Post findPostDao(Long id) {
+        return postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("다시 확인하세요."));
     }
 
-    public boolean verifyUserLike(Long userId,Long postId){
-        User user = userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("잘못된 유저 정보입니다."));
-        Post post = postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("없는 게시물입니다"));
+    //유저가 해당 게시물에 좋아요를 하면 true 아니면 false반환인데 프론트에서 0과 1로 반환 부탁함 -> 프론트에서 하트에 불 들어오는거 구현
+    public int verifyUserLike(Long userId, Long postId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("잘못된 유저 정보입니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("없는 게시물입니다"));
 
-        return likeRepository.existsByUserAndPost(user, post);
+        if (likeRepository.existsByUserAndPost(user, post) == true) {
+            return 1;
+        } else return 0;
     }
 }
 

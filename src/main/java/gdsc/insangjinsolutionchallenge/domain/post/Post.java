@@ -35,7 +35,8 @@ public class Post extends DateEntity {
     @Builder.Default
     private int likeCount = 0;
 
-    private boolean verifyLike;
+    //본인 좋아요 확인용
+    private int verifyLike;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comment = new ArrayList<>();

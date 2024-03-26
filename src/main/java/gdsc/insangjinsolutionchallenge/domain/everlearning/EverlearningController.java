@@ -12,6 +12,7 @@ public class EverlearningController {
 
     private final WebClient webClient;
 
+
     @Autowired
     public EverlearningController(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://apis.data.go.kr/7010000").build();
