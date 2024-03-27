@@ -38,13 +38,8 @@ public class PostService {
 
     // all이면 전체 , 아니면 likeCount로 검색
     @Transactional(readOnly = true)
-    public List<ResponsePostListDto> findAll(Long userId,String sort) {
-        List<Post> posts;
-        if (sort.equals("all")) {
-            posts = postRepository.findAll();
-        } else {
-            posts = postRepository.findAll(Sort.by(Sort.Direction.DESC, "likeCount"));
-        }
+    public List<ResponsePostListDto> findAll(Long userId) {
+        List<Post> posts = postRepository.findAll();
 
         List<ResponsePostListDto> responsePostDtos = posts.stream()
                 .map(post -> ResponsePostListDto.builder()
@@ -55,13 +50,32 @@ public class PostService {
                         .userName(post.getUser().getName())
                         .userLevel(post.getUser().getLevel())
                         .createAt(post.getCreateAt())
-                        .verifyLike(verifyUserLike(userId,post.getId()))
+                        .verifyLike(verifyUserLike(userId, post.getId()))
                         .build())
                 .toList();
 
         return responsePostDtos;
     }
 
+    @Transactional(readOnly = true)
+    public List<ResponsePostLikeListDto> findAllByLikeCount() {
+        List<Post> posts = postRepository.
+                findAll(Sort.by(Sort.Direction.DESC, "likeCount"));
+
+        List<ResponsePostLikeListDto> responsePostLikeDtos = posts.stream()
+                .map(post -> ResponsePostLikeListDto.builder()
+                        .id(post.getId())
+                        .title(post.getTitle())
+                        .content(post.getContent())
+                        .likeCount(post.getLikeCount())
+                        .userName(post.getUser().getName())
+                        .userLevel(post.getUser().getLevel())
+                        .createAt(post.getCreateAt())
+                        .build())
+                .toList();
+
+        return responsePostLikeDtos;
+    }
 
     // 검색어로 검색
     @Transactional(readOnly = true)

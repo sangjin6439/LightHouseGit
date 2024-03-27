@@ -22,9 +22,15 @@ public class PostController {
         return postService.save(Long.valueOf(principal.getName()), requestPostDto);
     }
 
-    @GetMapping("/find/list/{sort}")
-    public List<ResponsePostListDto> findAll(Principal principal,@PathVariable("sort") String sort) {
-        return postService.findAll(Long.valueOf(principal.getName()),sort);
+    @GetMapping("/find/list/all")
+    public List<ResponsePostListDto> findAll(Principal principal) {
+        return postService.findAll(Long.valueOf(principal.getName()));
+    }
+
+    //좋아요 많은 순서로 정렬
+    @GetMapping("/find/list/like")
+    public List<ResponsePostLikeListDto> findAllByLikeCount() {
+        return postService.findAllByLikeCount();
     }
 
     // 검색어로 검색하는 기능

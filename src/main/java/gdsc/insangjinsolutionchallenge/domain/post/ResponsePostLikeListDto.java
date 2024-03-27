@@ -7,14 +7,13 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class ResponsePostListDto {
-    // 웹으로 몇번째 post인지 알게해야함 그래야 이 포스트를 수정하게함
+public class ResponsePostLikeListDto {
+    // verifyLike제외
     private Long id;
     private String userName;
     private Integer userLevel;
     private String title;
     private String content;
     private int likeCount;
-    private int verifyLike;
     private LocalDateTime createAt;
 }

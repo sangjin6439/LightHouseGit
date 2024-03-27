@@ -30,7 +30,7 @@ public class ExampleController {
         return exampleService.findExamples();
     }
 
-    //플러터에서 바디에 값을 넣고 get요청이 안돼서 post로 요청함(오류 발생해서 param으로 넘김), 패스밸류로 두개 넘기니까 두번 send해야 인식했음
+    //flutter에서 바디에 값을 넣고 get요청이 안돼서 post로 요청함(오류 발생해서 param으로 넘김), 패스밸류로 두개 넘기니까 두번 send해야 인식했음
     @GetMapping("/find")
     public List<ResponseExampleListDto> findByGradeAndCategory(@RequestParam("grade") String grade, @RequestParam("category") String category){
         return exampleService.findExampleByGradeAndCategory(grade,category);
