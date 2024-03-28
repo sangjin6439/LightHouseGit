@@ -1,4 +1,4 @@
-package gdsc.insangjinsolutionchallenge.global.oauth;
+package gdsc.insangjinsolutionchallenge.global.Token;
 
 import jakarta.persistence.Column;
 import lombok.Builder;

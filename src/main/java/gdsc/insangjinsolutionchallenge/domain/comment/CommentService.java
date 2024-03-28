@@ -6,6 +6,7 @@ import gdsc.insangjinsolutionchallenge.domain.user.User;
 import gdsc.insangjinsolutionchallenge.domain.user.UserRepository;
 import gdsc.insangjinsolutionchallenge.global.exception.ApplicationErrorException;
 import gdsc.insangjinsolutionchallenge.global.exception.ApplicationErrorType;
+import gdsc.insangjinsolutionchallenge.global.sseNotification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public String save(Long userId, Long postId, RequestCommentDto requestCommentDto) {
@@ -31,6 +33,12 @@ public class CommentService {
                 .user(userInfo)
                 .build();
         commentRepository.save(comment);
+        CommentSseResponse commentSseResponse = CommentSseResponse.builder()
+                .postId(postId)
+                .userName(userInfo.getName())
+                .commentedTime(comment.getCreateAt())
+                .build();
+        notificationService.customNotify(userId,commentSseResponse,"작성하신 게시물에 댓글이 달렸습니다.", "comment");
        return "댓글이 저장됐습니다.";
     }
 

@@ -1,5 +1,7 @@
 package gdsc.insangjinsolutionchallenge.global.oauth;
 
+import gdsc.insangjinsolutionchallenge.global.Token.RefreshToken;
+import gdsc.insangjinsolutionchallenge.global.Token.RefreshTokenRepository;
 import gdsc.insangjinsolutionchallenge.global.Token.TokenDto;
 import gdsc.insangjinsolutionchallenge.global.Token.TokenRequestDto;
 import gdsc.insangjinsolutionchallenge.domain.user.LoginUserDto;

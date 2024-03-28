@@ -29,6 +29,11 @@ public class LogAspect {
     public void service(){
     }
 
+    @Pointcut("execution(* gdsc.insangjinsolutionchallenge.global..*(..))")
+    public void global(){
+
+    }
+
     @Around("all()")
     public Object logging(ProceedingJoinPoint joinPoint) throws Throwable {
         long start = System.currentTimeMillis();
@@ -61,7 +66,8 @@ public class LogAspect {
 //
 //    }
 //
-    @After("service()")
+    //시큐리티 로직 확인용
+    @After("global()")
     public void afterLogic(JoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();

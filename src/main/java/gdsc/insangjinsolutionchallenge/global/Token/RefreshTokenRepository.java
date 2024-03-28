@@ -1,10 +1,11 @@
-package gdsc.insangjinsolutionchallenge.global.oauth;
+package gdsc.insangjinsolutionchallenge.global.Token;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-//CrudRepository 인터페이스에 @Repository가 이미 추가 되어있음
+@Repository
 public interface RefreshTokenRepository extends CrudRepository<RefreshToken, String> {
     Optional<RefreshToken> findById(String key);
 }
