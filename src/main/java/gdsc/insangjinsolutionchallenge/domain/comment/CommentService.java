@@ -38,7 +38,8 @@ public class CommentService {
                 .userName(userInfo.getName())
                 .commentedTime(comment.getCreateAt())
                 .build();
-        notificationService.customNotify(userId,commentSseResponse,"작성하신 게시물에 댓글이 달렸습니다.", "comment");
+        notificationService.notifyComment(postId);
+//        notificationService.customNotify(userId,commentSseResponse,"작성하신 게시물에 댓글이 달렸습니다.", "comment");
        return "댓글이 저장됐습니다.";
     }
 
