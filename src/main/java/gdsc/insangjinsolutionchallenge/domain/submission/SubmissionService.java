@@ -47,7 +47,7 @@ public class SubmissionService {
         }
         submissionRepository.save(submission);
 
-        userRepository.save(userinfo);
+//        userRepository.save(userinfo);
 
         //정답률 관련 메서드
         int totalSubmissions = example.getSubmissions().size();
@@ -78,8 +78,4 @@ public class SubmissionService {
         return responseSubmission;
     }
 
-    private Submission findById(Long submissionId) {
-        return submissionRepository.findById(submissionId)
-                .orElseThrow(() -> new IllegalArgumentException("정확한 제출 번호를 입력하세요"));
-    }
 }

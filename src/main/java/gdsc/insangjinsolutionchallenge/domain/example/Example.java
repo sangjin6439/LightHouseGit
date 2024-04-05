@@ -54,20 +54,6 @@ public class Example extends DateEntity {
     private List<Submission> submissions;
 
 
-    public static Example toEntity(RequestExampleDto requestExampleDto) {
-        return Example.builder()
-                .title(requestExampleDto.getTitle())
-                .content(requestExampleDto.getContent())
-                .multipleChoice(requestExampleDto.getMultipleChoice())
-                .imgPath(requestExampleDto.getImgPath())
-                .correct(requestExampleDto.getCorrect())
-                .score(requestExampleDto.getScore())
-                .category(requestExampleDto.getCategory())
-                .grade(requestExampleDto.getGrade())
-                .build();
-    }
-
-
     public void saveCorrectPercentage(double correctPercentage){
         this.correctPercentage=correctPercentage;
     }

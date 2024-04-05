@@ -30,9 +30,4 @@ public class Comment extends DateEntity {
     @Column(nullable = false)
     private String content;
 
-    public static Comment toEntity(RequestCommentDto requestCommentDto){
-       return Comment.builder()
-                .content(requestCommentDto.getContent())
-                .build();
-    }
 }

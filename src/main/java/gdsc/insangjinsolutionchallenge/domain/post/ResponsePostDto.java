@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class ResponsePostDto {
-    // 웹으로 몇번째 post인지 알게해야함 그래야 이 포스트를 수정하게함
+
     private Long id;
     private String userName;
     private Integer userLevel;
@@ -24,15 +24,5 @@ public class ResponsePostDto {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public static ResponsePostDto toDto(Post post){
-        return ResponsePostDto.builder()
-                .id(post.getId())
-                .userName(post.getUser().getName())
-                .userLevel(post.getUser().getLevel())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .createAt(post.getCreateAt())
-                .updateAt(post.getUpdateAt())
-                .build();
-    }
+
 }

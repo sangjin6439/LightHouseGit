@@ -16,7 +16,16 @@ public class ExampleService {
 
     @Transactional
     public Example saveExample(RequestExampleDto requestExampleDto){
-        Example example = Example.toEntity(requestExampleDto);
+        Example example = Example.builder()
+                .title(requestExampleDto.getTitle())
+                .content(requestExampleDto.getContent())
+                .multipleChoice(requestExampleDto.getMultipleChoice())
+                .imgPath(requestExampleDto.getImgPath())
+                .correct(requestExampleDto.getCorrect())
+                .score(requestExampleDto.getScore())
+                .category(requestExampleDto.getCategory())
+                .grade(requestExampleDto.getGrade())
+                .build();
         exampleRepository.save(example);
         return example;
     }
@@ -25,8 +34,20 @@ public class ExampleService {
     @Transactional(readOnly = true)
     public ResponseExampleDto findExample(Long exampleId) {
         Example example = findById(exampleId);
-        ResponseExampleDto responseExampleDto = ResponseExampleDto.toDto(example);
-        return responseExampleDto;
+        return ResponseExampleDto.builder()
+                .id(example.getId())
+                .content(example.getContent())
+                .multipleChoice(example.getMultipleChoice())
+                .title(example.getTitle())
+                .imgPath(example.getImgPath())
+                .correct(example.getCorrect())
+                .correctPercentage(example.getCorrectPercentage())
+                .score(example.getScore())
+                .category(example.getCategory())
+                .grade(example.getGrade())
+                .createAt(example.getCreateAt())
+                .updateAt(example.getUpdateAt())
+                .build();
     }
 
     /* 학년과 유형별 문제 조회 메서드 */

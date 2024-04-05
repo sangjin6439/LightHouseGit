@@ -21,17 +21,19 @@ public class PostService {
     private final CommentService commentService;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
+    private final static long POST_SCORE=15;
 
     @Transactional
     public String save(Long userId, RequestPostDto requestPostDto) {
         User userInfo = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 유저입니다."));
-
         Post post = Post.builder()
                 .title(requestPostDto.getTitle())
                 .content(requestPostDto.getContent())
                 .user(userInfo)
                 .build();
+            userInfo.addTotalScoreAndUpdateLevel(POST_SCORE);
+//        userRepository.save(userInfo);
         postRepository.save(post);
         return "저장 완료!";
     }

@@ -16,14 +16,5 @@ public class ResponseCommentDto {
     private String content;
     private LocalDateTime createAt;
 
-    public static ResponseCommentDto toDto(Comment comment) {
-        return ResponseCommentDto.builder()
-                .id(comment.getId())
-                .userName(comment.getUser().getName())
-                .userLevel(comment.getUser().getLevel())
-                .content(comment.getContent())
-                .createAt(comment.getCreateAt())
-                .build();
-    }
 
 }

@@ -16,7 +16,7 @@ public class LoginUserDto {
     @NotBlank
     private String email;
 
-    @Size(min = 5, max = 20,message = "5자리 이상 20자리 이하의 비밀번호가 필요합니다.")
+    @Size(min = 5, max = 20, message = "5자리 이상 20자리 이하의 비밀번호가 필요합니다.")
     @NotBlank
     private String password;
 
@@ -36,7 +36,7 @@ public class LoginUserDto {
 
     private String country;
 
-    public User toUser(PasswordEncoder passwordEncoder){
+    public User toUser(PasswordEncoder passwordEncoder) {
         return User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
@@ -47,7 +47,8 @@ public class LoginUserDto {
                 .country(country)
                 .build();
     }
-    public UsernamePasswordAuthenticationToken toAuthentication(){
-        return new UsernamePasswordAuthenticationToken(email,password);
+
+    public UsernamePasswordAuthenticationToken toAuthentication() {
+        return new UsernamePasswordAuthenticationToken(email, password);
     }
 }

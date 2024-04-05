@@ -21,18 +21,4 @@ public class ResponseExampleDto {
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
-    public static ResponseExampleDto toDto(Example example){
-        return ResponseExampleDto.builder()
-                .id(example.getId())
-                .title(example.getTitle())
-                .imgPath(example.getImgPath())
-                .correct(example.getCorrect())
-                .correctPercentage(example.getCorrectPercentage())
-                .score(example.getScore())
-                .category(example.getCategory())
-                .grade(example.getGrade())
-                .createAt(example.getCreateAt())
-                .updateAt(example.getUpdateAt())
-                .build();
-    }
 }

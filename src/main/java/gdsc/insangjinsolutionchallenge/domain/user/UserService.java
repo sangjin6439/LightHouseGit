@@ -24,12 +24,31 @@ public class UserService {
     @Transactional(readOnly = true)
     public ResponseUserDto findMyInfo(Long userId) {
         User user = findUserById(userId);
-        return ResponseUserDto.toDto(user);
+        return ResponseUserDto.builder()
+                .name(user.getName())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .school(user.getSchool())
+                .country(user.getCountry())
+                .totalScore(user.getTotalScore())
+                .level(user.getLevel())
+                .role(user.getAuthority())
+                .build();
     }
 
     @Transactional(readOnly = true)
     public ResponseUserDto findUser(String email) {
-        return ResponseUserDto.toDto(findUserByEmail(email));
+        User user = findUserByEmail(email);
+        return ResponseUserDto.builder()
+                .name(user.getName())
+                .age(user.getAge())
+                .email(user.getEmail())
+                .school(user.getSchool())
+                .country(user.getCountry())
+                .totalScore(user.getTotalScore())
+                .level(user.getLevel())
+                .role(user.getAuthority())
+                .build();
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package gdsc.insangjinsolutionchallenge.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import gdsc.insangjinsolutionchallenge.domain.like.Like;
 import gdsc.insangjinsolutionchallenge.domain.post.Post;
 import gdsc.insangjinsolutionchallenge.domain.submission.Submission;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 @Setter
 @Table(name = "users")
-public class User{
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,27 +49,30 @@ public class User{
 
     // user삭제 시 해당 유저 게시물 삭제 <- foreign키 제약 조건때문에 cascade 제약 걸어줌
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Post> posts = new ArrayList<>();
 
     // user삭제 시 해당 유저 문제 제출 삭제
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Submission> submissions = new ArrayList<>();
-    
+
     // user삭제 시 해당 유저 게시물 좋아요 삭제
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Like> likes = new ArrayList<>();
 
     @Builder
     public User(String email, String password, Authority authority) {
         this.email = email;
         this.password = password;
-        this.authority= authority;
+        this.authority = authority;
     }
 
 
     // 이름, 나이, 학교 바꿀 수 있게 열어둠
     public void updateUser(RequestUserDto requestUserDto) {
-        this.name= requestUserDto.getName();
+        this.name = requestUserDto.getName();
         this.age = requestUserDto.getAge();
         this.school = requestUserDto.getSchool();
         this.country = requestUserDto.getCountry();
@@ -79,6 +83,5 @@ public class User{
         this.totalScore += score;
         this.level = (this.totalScore / 100);
     }
-
 
 }
