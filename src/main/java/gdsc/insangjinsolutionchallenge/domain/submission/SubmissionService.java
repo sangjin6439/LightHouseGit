@@ -32,13 +32,13 @@ public class SubmissionService {
                 .userAnswer(requestSubmissionDto.getUserAnswer())
                 .build();
 
-        // 유저가 이전에 문제를 맞추었는지 확인
+        // 유저가 이전에 문제를 맞힌 적이 있는지 확인
         boolean isPreviouslyCorrect = submissionRepository.existsByUserAndExampleAndCorrect(userinfo, example, true);
         if (isPreviouslyCorrect) {
             throw new IllegalArgumentException("이미 맞춘 문제에 대해선 점수를 받을 수 없습니다.");
         }
 
-        //문제를 맞췄는지 확인
+        //문제 정답 확인
         submission.setCorrect(submission.checkAnswer(example));
 
         //점수 추가 메서드
@@ -46,8 +46,6 @@ public class SubmissionService {
             userinfo.addTotalScoreAndUpdateLevel(example.getScore());
         }
         submissionRepository.save(submission);
-
-//        userRepository.save(userinfo);
 
         //정답률 관련 메서드
         int totalSubmissions = example.getSubmissions().size();
@@ -74,8 +72,6 @@ public class SubmissionService {
                         .createAt(submission.getCreateAt())
                         .build())
                 .toList();
-
         return responseSubmission;
     }
-
 }

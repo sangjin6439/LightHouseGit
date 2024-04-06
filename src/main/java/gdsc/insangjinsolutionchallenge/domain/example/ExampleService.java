@@ -13,9 +13,8 @@ public class ExampleService {
 
     private final ExampleRepository exampleRepository;
 
-
     @Transactional
-    public Example saveExample(RequestExampleDto requestExampleDto){
+    public Example saveExample(RequestExampleDto requestExampleDto) {
         Example example = Example.builder()
                 .title(requestExampleDto.getTitle())
                 .content(requestExampleDto.getContent())
@@ -52,8 +51,8 @@ public class ExampleService {
 
     /* 학년과 유형별 문제 조회 메서드 */
     @Transactional(readOnly = true)
-    public List<ResponseExampleListDto> findExampleByGradeAndCategory(String grade, String category){
-        List<Example> examples = exampleRepository.findByGradeAndCategory(grade,category);
+    public List<ResponseExampleListDto> findExampleByGradeAndCategory(String grade, String category) {
+        List<Example> examples = exampleRepository.findByGradeAndCategory(grade, category);
 
         List<ResponseExampleListDto> responseExampleListDtos = examples.stream()
                 .map(example -> ResponseExampleListDto.builder()
@@ -94,7 +93,6 @@ public class ExampleService {
     }
 
 
-
     @Transactional
     public String updateExample(Long exampleId, RequestExampleDto requestExampleDto) throws IOException {
         Example example = findById(exampleId);
@@ -102,7 +100,6 @@ public class ExampleService {
         return "수정 완료!";
     }
 
-    // 이미지 삭제가 안됨
     @Transactional
     public String deleteExample(Long exampleId) {
         exampleRepository.delete(findById(exampleId));
@@ -113,6 +110,4 @@ public class ExampleService {
         return exampleRepository.findById(exampleId)
                 .orElseThrow(() -> new IllegalArgumentException("문제 번호를 확인해 주세요"));
     }
-
-
 }

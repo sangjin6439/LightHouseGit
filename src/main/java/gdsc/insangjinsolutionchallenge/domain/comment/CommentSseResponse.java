@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class CommentSseResponse {
-
     Long postId;
     String userName;
     LocalDateTime commentedTime;

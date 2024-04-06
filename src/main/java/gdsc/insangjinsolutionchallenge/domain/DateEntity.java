@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 public class DateEntity {
 
-    @Column(name = "CREATE_AT", updatable = false )
+    @Column(name = "CREATE_AT", updatable = false)
     @CreatedDate
     private LocalDateTime createAt;
 

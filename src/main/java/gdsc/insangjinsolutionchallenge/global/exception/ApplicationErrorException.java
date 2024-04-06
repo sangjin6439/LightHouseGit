@@ -32,10 +32,9 @@ public class ApplicationErrorException extends RuntimeException {
         this.applicationErrorType = applicationErrorType;
     }
 
-    public ApplicationErrorException(ApplicationErrorType applicationErrorType, Throwable throwable,String customMessage) {
+    public ApplicationErrorException(ApplicationErrorType applicationErrorType, Throwable throwable, String customMessage) {
         super(throwable);
         this.applicationErrorType = applicationErrorType;
         this.customMessage = customMessage;
     }
-
 }

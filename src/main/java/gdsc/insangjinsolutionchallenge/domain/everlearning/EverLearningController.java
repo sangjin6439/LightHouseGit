@@ -20,8 +20,8 @@ public class EverLearningController {
     }
 
     @GetMapping("/everlearning/web/{pageNum}")
-    public Mono<String> getLectureListWeb(@PathVariable("pageNum") int pageNum){
-        //인증키를 URL에서 사용이 가능하도록 인코딩 된 인증키 값을 넣어야함
+    public Mono<String> getLectureListWeb(@PathVariable("pageNum") int pageNum) {
+        //인증키를 URL에서 사용이 가능하도록 인코딩 된 인증키 값
         String serviceKey = "TXz9igaEZjaoO84jGvXH3IpSnKKgsb6HG6HhFL23kS1FEb%2Bnn1%2BbgvEBDssl0bnMe%2BRsG7Gv5HMZHKpWHofd4Q%3D%3D";
         String pageNo = String.valueOf(pageNum);
         String numOfRows = "10";
@@ -35,8 +35,8 @@ public class EverLearningController {
     }
 
     @GetMapping("/everlearning/app/{pageNum}")
-    public Mono<String> getLectureListApp(@PathVariable("pageNum") int pageNum){
-        //인증키를 URL에서 사용이 가능하도록 인코딩 된 인증키 값을 넣어야함
+    public Mono<String> getLectureListApp(@PathVariable("pageNum") int pageNum) {
+        //인증키를 URL에서 사용이 가능하도록 인코딩 된 인증키 값
         String serviceKey = "TXz9igaEZjaoO84jGvXH3IpSnKKgsb6HG6HhFL23kS1FEb%2Bnn1%2BbgvEBDssl0bnMe%2BRsG7Gv5HMZHKpWHofd4Q%3D%3D";
         String pageNo = String.valueOf(pageNum);
         String numOfRows = "30";
@@ -49,5 +49,4 @@ public class EverLearningController {
                 .bodyToMono(String.class)// 응답 데이터를 Mono<T>로 변환
                 .timeout(Duration.ofSeconds(5));  //5초 이내로 응답이 안오면 timeout 발생 시킴
     }
-
 }

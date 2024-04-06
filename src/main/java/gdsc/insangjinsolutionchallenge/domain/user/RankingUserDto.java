@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class RankingUserDto {
-
     private String name;
     private String email;
     private Integer totalScore;

@@ -32,7 +32,6 @@ public class Submission extends DateEntity {
     @JoinColumn(name = "example_id")
     private Example example;
 
-
     // 정답 확인 메서드
     public boolean checkAnswer(Example example) {
         if (example.getCorrect().equals(userAnswer)) {

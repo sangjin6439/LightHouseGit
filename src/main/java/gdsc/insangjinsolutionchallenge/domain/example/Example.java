@@ -53,9 +53,8 @@ public class Example extends DateEntity {
     @OneToMany(mappedBy = "example", cascade = CascadeType.ALL)
     private List<Submission> submissions;
 
-
-    public void saveCorrectPercentage(double correctPercentage){
-        this.correctPercentage=correctPercentage;
+    public void saveCorrectPercentage(double correctPercentage) {
+        this.correctPercentage = correctPercentage;
     }
 
     public void update(RequestExampleDto requestExampleDto) {

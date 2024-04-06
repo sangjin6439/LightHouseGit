@@ -21,28 +21,28 @@ public class ExampleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseExampleDto find(@PathVariable("id") Long id){
+    public ResponseExampleDto find(@PathVariable("id") Long id) {
         return exampleService.findExample(id);
     }
 
     @GetMapping("/all") //DTO로 매핑 해야함-> 카테고리별로 나누고 페이징해야함
-    public List<ResponseExampleListDto> findAll(){
+    public List<ResponseExampleListDto> findAll() {
         return exampleService.findExamples();
     }
 
-    //flutter에서 바디에 값을 넣고 get요청이 안돼서 post로 요청함(오류 발생해서 param으로 넘김), 패스밸류로 두개 넘기니까 두번 send해야 인식했음
+    //flutter에서 바디에 값을 넣고 get요청이 안돼서 post로 요청(오류 발생해서 param으로 넘김), 패스밸류로 두개 넘기니까 두번 send해야 인식
     @GetMapping("/find")
-    public List<ResponseExampleListDto> findByGradeAndCategory(@RequestParam("grade") String grade, @RequestParam("category") String category){
-        return exampleService.findExampleByGradeAndCategory(grade,category);
+    public List<ResponseExampleListDto> findByGradeAndCategory(@RequestParam("grade") String grade, @RequestParam("category") String category) {
+        return exampleService.findExampleByGradeAndCategory(grade, category);
     }
 
     @PatchMapping("/{id}")
     public String update(@PathVariable("id") Long id, RequestExampleDto requestExampleDto) throws IOException {
-        return exampleService.updateExample(id,requestExampleDto);
+        return exampleService.updateExample(id, requestExampleDto);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         return exampleService.deleteExample(id);
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ExampleRepository extends JpaRepository<Example,Long> {
+public interface ExampleRepository extends JpaRepository<Example, Long> {
     List<Example> findByGradeAndCategory(String grade, String category);
 }

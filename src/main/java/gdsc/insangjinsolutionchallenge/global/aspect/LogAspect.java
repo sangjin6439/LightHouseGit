@@ -48,24 +48,6 @@ public class LogAspect {
         }
     }
 
-
-//    @Before("controller() || service()")
-//    public void beforeLogic(JoinPoint joinPoint) throws Throwable{
-//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-//        Method method = methodSignature.getMethod();
-//        log.info("method = {}", method.getName());
-//
-//        Object[] args = joinPoint.getArgs();
-//        for (Object arg : args ){
-//            if(arg != null){
-//                log.info("type = {}", arg.getClass().getSimpleName());
-//                log.info("value = {}", arg);
-//            }
-//
-//        }
-//
-//    }
-//
     //시큐리티 로직 확인용
     @After("global()")
     public void afterLogic(JoinPoint joinPoint) throws Throwable {
@@ -80,7 +62,5 @@ public class LogAspect {
                 log.info("value = {}", arg);
             }
         }
-
     }
-
 }

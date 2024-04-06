@@ -42,17 +42,16 @@ public class PostController {
 
     @GetMapping("/find/{id}")
     public ResponsePostDto find(Principal principal, @PathVariable("id") Long id) {
-        return postService.find(Long.valueOf(principal.getName()),id);
+        return postService.find(Long.valueOf(principal.getName()), id);
     }
 
     @PatchMapping("/update/{id}")
-    public String update(Principal principal, @PathVariable("id")Long id,@RequestBody RequestPostDto requestPostDto){
-        return postService.update(Long.valueOf(principal.getName()), id,requestPostDto);
+    public String update(Principal principal, @PathVariable("id") Long id, @RequestBody RequestPostDto requestPostDto) {
+        return postService.update(Long.valueOf(principal.getName()), id, requestPostDto);
     }
 
     @DeleteMapping("delete/{id}")
     public String delete(Principal principal, @PathVariable("id") Long id) {
-        return postService.delete(Long.valueOf(principal.getName()),id);
+        return postService.delete(Long.valueOf(principal.getName()), id);
     }
-
 }

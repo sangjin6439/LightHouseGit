@@ -69,7 +69,6 @@ public class User {
         this.authority = authority;
     }
 
-
     // 이름, 나이, 학교 바꿀 수 있게 열어둠
     public void updateUser(RequestUserDto requestUserDto) {
         this.name = requestUserDto.getName();
@@ -83,5 +82,4 @@ public class User {
         this.totalScore += score;
         this.level = (this.totalScore / 100);
     }
-
 }

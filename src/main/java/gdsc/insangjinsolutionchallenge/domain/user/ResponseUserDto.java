@@ -14,5 +14,4 @@ public class ResponseUserDto {
     private Integer level;
     private Integer totalScore;
     private Authority role;
-
 }

@@ -21,7 +21,7 @@ public class PostService {
     private final CommentService commentService;
     private final UserRepository userRepository;
     private final LikeRepository likeRepository;
-    private final static long POST_SCORE=15;
+    private final static long POST_SCORE = 15;
 
     @Transactional
     public String save(Long userId, RequestPostDto requestPostDto) {
@@ -32,13 +32,13 @@ public class PostService {
                 .content(requestPostDto.getContent())
                 .user(userInfo)
                 .build();
-            userInfo.addTotalScoreAndUpdateLevel(POST_SCORE);
+        userInfo.addTotalScoreAndUpdateLevel(POST_SCORE);
 //        userRepository.save(userInfo);
         postRepository.save(post);
         return "저장 완료!";
     }
 
-    // all이면 전체 , 아니면 likeCount로 검색
+    //전체 검색
     @Transactional(readOnly = true)
     public List<ResponsePostListDto> findAll(Long userId) {
         List<Post> posts = postRepository.findAll();
@@ -59,6 +59,7 @@ public class PostService {
         return responsePostDtos;
     }
 
+    //좋아요 순으로 검색
     @Transactional(readOnly = true)
     public List<ResponsePostLikeListDto> findAllByLikeCount() {
         List<Post> posts = postRepository.
@@ -116,7 +117,6 @@ public class PostService {
                 .build();
         return responsePostDto;
     }
-
 
     @Transactional
     public String update(Long userId, Long id, RequestPostDto requestPostDto) {

@@ -32,6 +32,7 @@ public class SecurityConfig {
     private final CorsFilter corsFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -64,19 +65,19 @@ public class SecurityConfig {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/subscribe/**","/everlearning/**","https://light-house-web.vercel.app/","https://https://light-house-web.vercel.app/posts/find/list/all","/posts/find/**","/","/auth/**","/ExtraLogin/**","/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
-                .requestMatchers(HttpMethod.POST,"/examples/**").hasAuthority("ROLE_TEACHER")
-                .requestMatchers(HttpMethod.DELETE,"/examples/**").hasAuthority("ROLE_TEACHER")
-                .requestMatchers(HttpMethod.PATCH,"/examples/**").hasAuthority("ROLE_TEACHER")
+                .requestMatchers("/everlearning/**", "https://light-house-web.vercel.app/", "https://https://light-house-web.vercel.app/posts/find/list/all", "/posts/find/**", "/", "/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/examples/**").hasAuthority("ROLE_TEACHER")
+                .requestMatchers(HttpMethod.DELETE, "/examples/**").hasAuthority("ROLE_TEACHER")
+                .requestMatchers(HttpMethod.PATCH, "/examples/**").hasAuthority("ROLE_TEACHER")
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
 
-
         return http.build();
     }
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -86,21 +87,20 @@ public class SecurityConfig {
             }
         };
     }
+
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-    //setAllowedOriginPatterns 여기에는 값이 "*"이면 안됨
+        //setAllowedOriginPatterns 여기에는 값이 "*"이면 안됨
         configuration.setAllowedOrigins(List.of("https://light-house-web.vercel.app/"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Access-Control-Allow-Credentials", "Authorization", "Set-Cookie"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }
-
 }

@@ -16,23 +16,22 @@ public class LikeService {
     private final PostService postService;
     private final UserRepository userRepository;
 
-
-   @Transactional
-   public int addLike(Long userId, Long postId){
+    @Transactional
+    public int addLike(Long userId, Long postId) {
         User userInfo = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("올바른 유저 정보를 입력해 주세요."));
         Post post = postService.findPostDao(postId);
-        if (!likeRepository.existsByUserAndPost(userInfo, post)){
-            post.addLikeCount(post.getLikeCount()+1);
-            Like like =Like.builder()
+        if (!likeRepository.existsByUserAndPost(userInfo, post)) {
+            post.addLikeCount(post.getLikeCount() + 1);
+            Like like = Like.builder()
                     .user(userInfo)
                     .post(post)
                     .build();
             likeRepository.save(like);
             return likeRepository.countLikesByPostId(postId);
         } else {
-            post.addLikeCount(post.getLikeCount()-1);
-            likeRepository.deleteByUserAndPost(userInfo,post);
+            post.addLikeCount(post.getLikeCount() - 1);
+            likeRepository.deleteByUserAndPost(userInfo, post);
             return likeRepository.countLikesByPostId(postId);
         }
     }

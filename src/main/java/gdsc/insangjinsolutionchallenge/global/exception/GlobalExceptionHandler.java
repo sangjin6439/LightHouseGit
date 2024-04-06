@@ -48,13 +48,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = HttpClientErrorException.Unauthorized.class)
-    public ResponseEntity<ErrorResponseDto> handleUnauthorizedException(WebRequest request, HttpClientErrorException.Unauthorized e){
+    public ResponseEntity<ErrorResponseDto> handleUnauthorizedException(WebRequest request, HttpClientErrorException.Unauthorized e) {
         log.error("UnauthenticatedException {}", e.getMessage());
         ErrorResponseDto errorResponseDto = new ErrorResponseDto(ApplicationErrorType.UNAUTHORIZED.name(), e.getMessage());
         return new ResponseEntity<>(errorResponseDto, ApplicationErrorType.UNAUTHORIZED.getHttpStatus());
     }
-
-
 
     @ExceptionHandler
     public ResponseEntity<ErrorResponseDto> handleException(WebRequest request, Exception e) {

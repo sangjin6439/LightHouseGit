@@ -13,8 +13,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-
-    @Transactional //추가 정보 입력
+    @Transactional
     public String saveEx(Long userId, RequestUserDto requestUserDto) {
         User userInfo = findUserById(userId);
         userInfo.updateUser(requestUserDto);
@@ -89,8 +88,4 @@ public class UserService {
                         .build())
                 .toList();
     }
-
-
-
-
 }

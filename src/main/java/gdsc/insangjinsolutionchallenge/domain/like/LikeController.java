@@ -23,10 +23,9 @@ public class LikeController {
     private final LikeService likeService;
 
     @PostMapping("/{postId}")
-    public ResponseEntity addLike(Principal principal, @PathVariable("postId") Long postId){
-        likeService.addLike(Long.valueOf(principal.getName()),postId);
+    public ResponseEntity addLike(Principal principal, @PathVariable("postId") Long postId) {
+        likeService.addLike(Long.valueOf(principal.getName()), postId);
         log.info(principal.getName());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-
 }

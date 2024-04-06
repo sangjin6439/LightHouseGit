@@ -15,6 +15,4 @@ public class ResponseCommentDto {
     private Integer userLevel;
     private String content;
     private LocalDateTime createAt;
-
-
 }

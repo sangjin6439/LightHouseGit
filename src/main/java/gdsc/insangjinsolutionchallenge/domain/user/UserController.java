@@ -16,7 +16,6 @@ public class UserController {
 
     private final UserService userService;
 
-
     @PostMapping("add/info") //추가 정보 입력, 부분적인 사항만 저정할 때에는 patch를 써야함. put을 쓰면 모든 엔티티의 값을 넣어야함
     public String saveEx(Principal principal, @RequestBody RequestUserDto requestUserDto) {
         return userService.saveEx(Long.valueOf(principal.getName()), requestUserDto);
@@ -46,5 +45,4 @@ public class UserController {
     public String delete(Principal principal) {
         return userService.deleteUser(Long.valueOf(principal.getName()));
     }
-
 }

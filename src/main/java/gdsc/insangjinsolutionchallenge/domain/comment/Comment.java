@@ -18,7 +18,7 @@ public class Comment extends DateEntity {
 
     @Id
     @GeneratedValue
-    @Column(name="comment_id")
+    @Column(name = "comment_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

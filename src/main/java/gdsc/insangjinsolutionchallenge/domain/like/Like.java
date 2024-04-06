@@ -26,6 +26,4 @@ public class Like {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-
 }

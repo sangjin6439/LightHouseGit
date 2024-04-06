@@ -18,5 +18,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findUsersByTotalScore();
 
     List<User> findBySchoolOrderByTotalScoreDesc(String school);
-
 }

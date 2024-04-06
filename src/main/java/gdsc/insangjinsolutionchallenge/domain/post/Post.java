@@ -44,13 +44,12 @@ public class Post extends DateEntity {
     @OneToMany(mappedBy = "post")
     private List<Like> likes = new ArrayList<>();
 
-    public void update( RequestPostDto requestPostDto){
-        this.title= requestPostDto.getTitle();
-        this.content= requestPostDto.getContent();
+    public void update(RequestPostDto requestPostDto) {
+        this.title = requestPostDto.getTitle();
+        this.content = requestPostDto.getContent();
     }
 
-    public void addLikeCount(int likeCount){
-        this.likeCount=likeCount;
+    public void addLikeCount(int likeCount) {
+        this.likeCount = likeCount;
     }
-
 }

@@ -20,9 +20,6 @@ public class LoginUserDto {
     @NotBlank
     private String password;
 
-    // enum타입에는 @Pattern사용 불가능
-//    @Pattern(regexp = "ROLE_TEACHER|ROLE_STUDENT",message = "학생과 선생님만 선택가능합니다.")
-//    @NotBlank
     private Authority authority;
 
     @NotBlank(message = "다시 확인해주세요")

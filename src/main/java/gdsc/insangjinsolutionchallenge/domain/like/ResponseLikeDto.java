@@ -8,6 +8,5 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class ResponseLikeDto {
-
     private Long userId;
 }

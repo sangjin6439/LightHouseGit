@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 public class ResponsePostDto {
-
     private Long id;
     private String userName;
     private Integer userLevel;
@@ -23,6 +22,4 @@ public class ResponsePostDto {
     private int verifyLike;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-
-
 }

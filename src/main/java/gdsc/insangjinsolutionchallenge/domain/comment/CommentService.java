@@ -6,7 +6,6 @@ import gdsc.insangjinsolutionchallenge.domain.user.User;
 import gdsc.insangjinsolutionchallenge.domain.user.UserRepository;
 import gdsc.insangjinsolutionchallenge.global.exception.ApplicationErrorException;
 import gdsc.insangjinsolutionchallenge.global.exception.ApplicationErrorType;
-import gdsc.insangjinsolutionchallenge.global.sseNotification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,14 +19,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final NotificationService notificationService;
 
     @Transactional
     public String save(Long userId, Long postId, RequestCommentDto requestCommentDto) {
-        Post post =postRepository.findById(postId).orElseThrow(()-> new IllegalArgumentException("없는 게시물입니다."));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("없는 게시물입니다."));
         User userInfo = userRepository.findById(userId)
-                .orElseThrow(()-> new IllegalArgumentException("없는 유저입니다."));
-         Comment comment = Comment.builder()
+                .orElseThrow(() -> new IllegalArgumentException("없는 유저입니다."));
+        Comment comment = Comment.builder()
                 .content(requestCommentDto.getContent())
                 .post(post)
                 .user(userInfo)
@@ -38,13 +36,11 @@ public class CommentService {
                 .userName(userInfo.getName())
                 .commentedTime(comment.getCreateAt())
                 .build();
-        notificationService.notifyComment(postId);
-//        notificationService.customNotify(userId,commentSseResponse,"작성하신 게시물에 댓글이 달렸습니다.", "comment");
-       return "댓글이 저장됐습니다.";
+        return "댓글이 저장됐습니다.";
     }
 
     @Transactional(readOnly = true)
-    public List<ResponseCommentDto> findAll(Long postId){
+    public List<ResponseCommentDto> findAll(Long postId) {
         List<Comment> comments = commentRepository.findAllByPostId(postId);
         List<ResponseCommentDto> commentDtos = comments.stream()
                 .map(comment -> ResponseCommentDto.builder()
@@ -62,8 +58,8 @@ public class CommentService {
     @Transactional
     public String delete(Long userId, Long id) {
         Long authorId = Long.valueOf(String.valueOf(findCommentDao(id).getUser().getId()));
-        if(!authorId.equals(userId)){
-            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED,"권한이 없는 사용자입니다.");
+        if (!authorId.equals(userId)) {
+            throw new ApplicationErrorException(ApplicationErrorType.UNAUTHORIZED, "권한이 없는 사용자입니다.");
         }
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("다시 확인해주세요"));
@@ -71,8 +67,8 @@ public class CommentService {
         return "삭제되었습니다.";
     }
 
-    private Comment findCommentDao(Long id){
-        return commentRepository.findById(id).orElseThrow(()-> new IllegalArgumentException("다시 확인해주세요."));
+    private Comment findCommentDao(Long id) {
+        return commentRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("다시 확인해주세요."));
     }
 
 }

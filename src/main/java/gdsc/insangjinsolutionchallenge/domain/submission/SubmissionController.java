@@ -17,15 +17,13 @@ public class SubmissionController {
     private final SubmissionService submissionService;
 
     @PostMapping("/save/{exampleId}")
-    public Submission save(Principal principal, @PathVariable("exampleId") Long exampleId, @RequestBody @Valid RequestSubmissionDto requestSubmissionDto){
+    public Submission save(Principal principal, @PathVariable("exampleId") Long exampleId, @RequestBody @Valid RequestSubmissionDto requestSubmissionDto) {
         return submissionService.saveSubmission(Long.valueOf(principal.getName()), exampleId, requestSubmissionDto);
     }
 
     //문제 번호로 유저 제출 찾기
     @GetMapping("/find/{exampleId}")
-    public List<ResponseSubmission> find(@PathVariable("exampleId") Long exampleId){
+    public List<ResponseSubmission> find(@PathVariable("exampleId") Long exampleId) {
         return submissionService.findSubmission(exampleId);
     }
-
-
 }

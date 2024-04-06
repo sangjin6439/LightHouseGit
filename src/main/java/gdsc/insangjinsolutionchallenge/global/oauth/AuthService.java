@@ -55,9 +55,7 @@ public class AuthService {
                 .key(authentication.getName())
                 .value(tokenDto.getRefreshToken())
                 .build();
-
         refreshTokenRepository.save(refreshToken);
-
         // 5. 토큰 발급
         return tokenDto;
     }

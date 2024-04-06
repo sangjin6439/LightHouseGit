@@ -20,5 +20,4 @@ public class ResponseExampleDto {
     private String grade;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
-
 }
