@@ -47,20 +47,10 @@ public class User {
     @Column(nullable = false)
     private Authority authority;
 
-    // user삭제 시 해당 유저 게시물 삭제 <- foreign키 제약 조건때문에 cascade 제약 걸어줌
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Post> posts = new ArrayList<>();
-
     // user삭제 시 해당 유저 문제 제출 삭제
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Submission> submissions = new ArrayList<>();
-
-    // user삭제 시 해당 유저 게시물 좋아요 삭제
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Like> likes = new ArrayList<>();
 
     @Builder
     public User(String email, String password, Authority authority) {
