@@ -7,6 +7,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,6 +41,7 @@ public class LikeServiceTest {
     private UserRepository userRepository;
 
     @Test
+    @DisplayName("게시판 좋아요 작동 테스트")
     public void testAddLike_whenUserAndPostExist_andLikeDoesNotExist_thenLikeIsAdded() {
         // Given
         Long userId = 1L;
@@ -66,6 +68,7 @@ public class LikeServiceTest {
         assertThat(post.getLikeCount()).isEqualTo(1);
     }
 
+    @DisplayName("이미 좋아요를 눌렀던 게시판에 다시 누르고 좋아요 지우는 테스트")
     @Test
     public void testAddLike_whenUserAndPostExist_andLikeAlreadyExists_thenLikeIsRemoved() {
         // Given
@@ -93,8 +96,9 @@ public class LikeServiceTest {
         assertThat(post.getLikeCount()).isEqualTo(0);
     }
 
+    @DisplayName("존재하지 않는 유저가 좋아요 누를 때 예외발생 테스트")
     @Test
-    public void testAddLike_whenUserDoesNotExist_thenThrowException() {
+    public void testAddLike_whenUserDoesNotExist(){
         // Given
         Long userId = 1L;
         Long postId = 1L;
@@ -107,5 +111,4 @@ public class LikeServiceTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    // 추가적인 테스트 케이스를 필요에 따라 작성할 수 있습니다.
 }
