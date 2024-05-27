@@ -35,6 +35,8 @@ spring:
         type:
           descriptor:
             sql: trace
+    #OSIV 설정 끄기
+    open-in-view: false
   sql:
     init:
       mode: always # <- 모든 db의 스크립트를 동작시킴

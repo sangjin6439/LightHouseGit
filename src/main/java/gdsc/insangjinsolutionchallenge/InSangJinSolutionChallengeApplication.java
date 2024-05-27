@@ -14,5 +14,4 @@ public class InSangJinSolutionChallengeApplication {
         SpringApplication.run(InSangJinSolutionChallengeApplication.class, args);
     }
 
-
 }

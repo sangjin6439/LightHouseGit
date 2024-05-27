@@ -1,11 +1,5 @@
 package gdsc.insangjinsolutionchallenge.global.config;
 
-import gdsc.insangjinsolutionchallenge.global.oauth.JwtFilter;
-import gdsc.insangjinsolutionchallenge.global.oauth.JwtSecurityConfig;
-import gdsc.insangjinsolutionchallenge.global.oauth.TokenProvider;
-import gdsc.insangjinsolutionchallenge.global.securityEntry.CustomAccessDeniedHandler;
-import gdsc.insangjinsolutionchallenge.global.securityEntry.CustomAuthenticationEntryPoint;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +17,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
+
+import gdsc.insangjinsolutionchallenge.global.oauth.JwtFilter;
+import gdsc.insangjinsolutionchallenge.global.oauth.JwtSecurityConfig;
+import gdsc.insangjinsolutionchallenge.global.oauth.TokenProvider;
+import gdsc.insangjinsolutionchallenge.global.securityEntry.CustomAccessDeniedHandler;
+import gdsc.insangjinsolutionchallenge.global.securityEntry.CustomAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 
 
 @Configuration
@@ -65,7 +66,7 @@ public class SecurityConfig {
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/everlearning/**", "https://light-house-web.vercel.app/", "https://https://light-house-web.vercel.app/posts/find/list/all", "/posts/find/**", "/", "/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
+                .requestMatchers("/**","/everlearning/**", "https://light-house-web.vercel.app/", "https://https://light-house-web.vercel.app/posts/find/list/all", "/posts/find/**", "/", "/auth/**", "/swagger-ui.html", "/swagger-ui/**", "/api-docs/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/examples/**").hasAuthority("ROLE_TEACHER")
                 .requestMatchers(HttpMethod.DELETE, "/examples/**").hasAuthority("ROLE_TEACHER")
                 .requestMatchers(HttpMethod.PATCH, "/examples/**").hasAuthority("ROLE_TEACHER")
